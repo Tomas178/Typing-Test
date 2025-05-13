@@ -7,6 +7,7 @@ export function handleTyping(e) {
   const currentWord = document.querySelector('.word.current');
   const currentLetter = document.querySelector('letter.current');
   const expected = currentLetter?.textContent || ' ';
+  // Use this when displayed text only and only consists of numbers or letters: const isLetter = /^[a-z0-9]$/.test(key);
   const isLetter = key.length === 1 && key !== ' ';
   const isSpace = key === ' ';
   const isBackspace = key === 'Backspace';

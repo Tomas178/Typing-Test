@@ -1,8 +1,8 @@
 import { displayResults } from './display.js';
 import { addClass } from './adders.js';
-import { saveToLocalStorage } from '../app/localStorage.js';
+import localStorageHelper from '../app/localStorage.js';
 
-const gameTime = 10 * 1000;
+const gameTime = 60 * 1000;
 window.timer = null;
 window.gameStart = null;
 window.pauseTime = 0;
@@ -41,6 +41,6 @@ function gameOver() {
   addClass(document.querySelector('#wordsWrapper'), 'over');
   const wpm = getWpm();
   const accuracy = getWordAccuracy();
-  saveToLocalStorage(wpm, accuracy);
+  localStorageHelper.saveToLocalStorage(wpm, accuracy);
   displayResults(wpm, accuracy);
 }

@@ -1,6 +1,6 @@
 import { getPoetryDBResponse } from '../app/poetry.js';
 import { addClass, removeClass } from './adders.js';
-import * as localStorageHelper from '../app/localStorage.js';
+import localStorageHelper from '../app/localStorage.js';
 
 const wpmBox = document.getElementById('wpm');
 const accuracyBox = document.getElementById('accuracy');
@@ -25,6 +25,7 @@ const accuracyAllTimeBestCell = document.getElementById('accuracyAllTimeBestCell
 
 export async function displayWords() {
   const Poem = await getPoetryDBResponse();
+  Poem.cleanUpText();
 
   const wordsContainer = document.getElementById("words");
 

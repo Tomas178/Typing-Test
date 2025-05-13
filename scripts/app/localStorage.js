@@ -1,78 +1,82 @@
-export function saveToLocalStorage(wpm, accuracy) {
-	const currentTestResults = getCurrentTestResults();
-	const bestTestResults = getBestTestResults();
-	if (currentTestResults === null) {
-		localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
-		localStorage.setItem('Best', JSON.stringify({ wpm, accuracy}))
-	} else {
-		localStorage.setItem('Previous', JSON.stringify(currentTestResults));
+export default class LocalStorageHelper {
 
-		// accuracy cant be greater than 100 therefore, we check its value with '<='
-		if (bestTestResults.wpm < wpm && bestTestResults.accuracy <= accuracy) {
-			console.log('New best test results');
-			localStorage.setItem('Best', JSON.stringify({ wpm, accuracy}));
-		}
+	// Save current and best test results to localStorage
+	static saveToLocalStorage(wpm, accuracy) {
+		const currentTestResults = this.getCurrentTestResults();
+		const bestTestResults = this.getBestTestResults();
 
-		localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
-	}
-}
-
-export function getBestTestResults() {
-	const bestTestResults = JSON.parse(localStorage.getItem('Best'));
-	if (bestTestResults) {
-		return bestTestResults;
-	} else {
-		return null;
-	}
-}
-
-export function getPreviousTestResults() {
-	const previousTestResults = JSON.parse(localStorage.getItem('Previous'));
-	if (previousTestResults) {
-		return previousTestResults;
-	} else {
-		return null;
-	}
-}
-
-export function getCurrentTestResults() {
-	const currentTestResults = JSON.parse(localStorage.getItem('Current'));
-	if (currentTestResults) {
-		return currentTestResults;
-	} else {
-		return null;
-	}
-}
-
-export function compareWpm() {
-	const previousTestResults = getPreviousTestResults();
-	const currentTestResults = getCurrentTestResults();
-	if (previousTestResults && currentTestResults) {
-		const previousWpm = previousTestResults.wpm;
-		const currentWpm = currentTestResults.wpm;
-		if (currentWpm === previousWpm) {
-			return 'same';
+		if (currentTestResults === null) {
+			// No current test results, set initial values
+			localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
+			localStorage.setItem('Best', JSON.stringify({ wpm, accuracy }));
 		} else {
-		return currentWpm > previousWpm ? 'better' : 'worse';
-		}
-	}
-	else {
-		return '-';
-	}
-}
+			// Save current test results as previous
+			localStorage.setItem('Previous', JSON.stringify(currentTestResults));
 
-export function compareAccuracy() {
-	const previousTestResults = getPreviousTestResults();
-	const currentTestResults = getCurrentTestResults();
-	if (previousTestResults && currentTestResults) {
-		const previousAccuracy = previousTestResults.accuracy;
-		const currentAccuracy = currentTestResults.accuracy;
-		if (currentAccuracy === previousAccuracy) {
-			return 'same';
+			// Update the best test results if the new ones are better
+			if (bestTestResults.wpm < wpm && bestTestResults.accuracy <= accuracy) {
+				console.log('New best test results');
+				localStorage.setItem('Best', JSON.stringify({ wpm, accuracy }));
+			}
+
+			// Set new current test results
+			localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
+			}
+	}
+
+	// Get the best test results from localStorage
+	static getBestTestResults() {
+		const bestTestResults = JSON.parse(localStorage.getItem('Best'));
+		return bestTestResults ? bestTestResults : null;
+	}
+
+	// Get the previous test results from localStorage
+	static getPreviousTestResults() {
+		const previousTestResults = JSON.parse(localStorage.getItem('Previous'));
+		return previousTestResults ? previousTestResults : null;
+	}
+
+	// Get the current test results from localStorage
+	static getCurrentTestResults() {
+		const currentTestResults = JSON.parse(localStorage.getItem('Current'));
+		return currentTestResults ? currentTestResults : null;
+	}
+
+	// Compare the WPM values of the previous and current tests
+	static compareWpm() {
+		const previousTestResults = this.getPreviousTestResults();
+		const currentTestResults = this.getCurrentTestResults();
+
+		if (previousTestResults && currentTestResults) {
+			const previousWpm = previousTestResults.wpm;
+			const currentWpm = currentTestResults.wpm;
+
+			if (currentWpm === previousWpm) {
+					return 'same';
+			} else {
+				return currentWpm > previousWpm ? 'better' : 'worse';
+			}
 		} else {
-		return currentAccuracy > previousAccuracy ? 'better' : 'worse';
+			return '-';
 		}
-	} else {
-		return '-';
+	}
+
+	// Compare the accuracy values of the previous and current tests
+	static compareAccuracy() {
+		const previousTestResults = this.getPreviousTestResults();
+		const currentTestResults = this.getCurrentTestResults();
+
+		if (previousTestResults && currentTestResults) {
+			const previousAccuracy = previousTestResults.accuracy;
+			const currentAccuracy = currentTestResults.accuracy;
+
+			if (currentAccuracy === previousAccuracy) {
+				return 'same';
+			} else {
+				return currentAccuracy > previousAccuracy ? 'better' : 'worse';
+				}
+			} else {
+				return '-';
+			}
 	}
 }
