@@ -25,9 +25,6 @@ const accuracyAllTimeBestCell = document.getElementById('accuracyAllTimeBestCell
 
 export async function displayWords() {
   const Poem = await getPoetryDBResponse();
-  Poem.cleanUpText();
-
-  const wordsContainer = document.getElementById("words");
 
   Poem.words.forEach(word => {
     const wordDiv = document.createElement("div");
@@ -114,11 +111,6 @@ function displayResultsTable() {
 }
 
 export function resetTest() {
-  console.log('Resetting test...');
-  clearInterval(window.timer);
-  window.timer = null;
-  window.gameStart = null;
-  window.pauseTime = 0;
   wordsContainer.innerHTML = '';
   wpmBox.textContent = '-';
   accuracyBox.textContent = '-';
@@ -135,11 +127,6 @@ export function resetTest() {
 }
 
 export function restartTest() {
-  console.log('Restarting test...');
-  clearInterval(window.timer);
-  window.timer = null;
-  window.gameStart = null;
-  window.pauseTime = 0;
   const words = [...wordsContainer.querySelectorAll('.word')];
   words.forEach(word => {
     removeClass(word, 'typed');
@@ -161,6 +148,6 @@ export function restartTest() {
   timeInNumbers.textContent = 60;
   wordsContainer.style.marginTop = '0px';
   caret.style.cssText = 'font-size: 2rem; animation-name: caretFlashSmooth; opacity: 1; top: 6px; left: 8.5px;';
-  wordsInput.focus();
   removeClass(wordsWrapper, 'over');
+  wordsInput.focus();
 }

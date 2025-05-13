@@ -1,5 +1,6 @@
 import { displayWords, resetTest } from './UI/display.js';
 import { handleTyping } from './UI/inputHandler.js';
+import { test } from './app/settings.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   displayWords();
@@ -13,6 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const resetButton = document.getElementById('resetTestButton');
-  resetButton.addEventListener('click', resetTest);
+  resetButton.addEventListener('click', () => test.reset())
 });
 

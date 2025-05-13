@@ -1,36 +1,45 @@
 import { addClass, removeClass, removeExtraLetter, isExtraLetter } from './adders.js';
-import { updateTimer } from './resultsTracker.js';
-import { resetTest, restartTest } from './display.js';
+import { test } from '../app/settings.js';
 
 export function handleTyping(e) {
   const key = e.key;
   const currentWord = document.querySelector('.word.current');
   const currentLetter = document.querySelector('letter.current');
   const expected = currentLetter?.textContent || ' ';
+
   // Use this when displayed text only and only consists of numbers or letters: const isLetter = /^[a-z0-9]$/.test(key);
   const isLetter = key.length === 1 && key !== ' ';
+
   const isSpace = key === ' ';
   const isBackspace = key === 'Backspace';
   const isFirstLetter = currentLetter === currentWord?.firstChild;
+  const isBackSpaceAllowed = (currentWord === document.querySelector('.word') && currentLetter === document.querySelector('letter'));
 
   // Check if the test is over. If it is over, do nothing (the user can't type anymore)
   if (document.querySelector('#wordsWrapper.over')) return;
 
   // handle enter key
   if (key === 'Enter') {
-    restartTest();
+    test.restart();
   };
 
   // Handle escape key
   if (key === 'Escape') {
-    resetTest();
+    test.reset();
   };
 
   // Start the timer if it hasn't been started yey
-  if (!window.timer) {
+  if (!test.timer) {
     if (isLetter) {
-      updateTimer();
+      test.startTimer();
     } else {
+      return;
+    }
+  }
+
+  if (isBackSpaceAllowed) {
+    if (!isLetter) {
+      console.log('Backspace is not allowed!');
       return;
     }
   }
@@ -110,7 +119,7 @@ function handleBackspaceKey(currentWord, currentLetter, isFirstLetter) {
       removeClass(previousWord.lastChild, 'correct');
       removeClass(previousWord, 'error');
       removeClass(previousWord, 'typed');
-      if (isExtraLetter(previousWord, previousWord.lastChild)) {
+      if (isExtraLetter(previousWord.lastChild)) {
         removeExtraLetter(previousWord, previousWord.lastChild);
       };
     };
@@ -119,7 +128,7 @@ function handleBackspaceKey(currentWord, currentLetter, isFirstLetter) {
         addClass(currentLetter.previousSibling, 'current');
         removeClass(currentLetter.previousSibling, 'incorrect');
         removeClass(currentLetter.previousSibling, 'correct');
-        if (isExtraLetter(currentWord, currentLetter.previousSibling)) {
+        if (isExtraLetter(currentLetter.previousSibling)) {
           removeExtraLetter(currentWord, currentLetter.previousSibling);
         }
       }
@@ -127,7 +136,7 @@ function handleBackspaceKey(currentWord, currentLetter, isFirstLetter) {
         addClass(currentWord.lastChild, 'current');
         removeClass(currentWord.lastChild, 'incorrect');
         removeClass(currentWord.lastChild, 'correct');
-        if (isExtraLetter(currentWord, currentWord.lastChild)) {
+        if (isExtraLetter(currentWord.lastChild)) {
           removeExtraLetter(currentWord, currentWord.lastChild);
         }
       };
@@ -143,6 +152,21 @@ function updateLines(currentWord) {
     words.style.marginTop = (margin - 52) + 'px';
   };
 };
+
+/* this should be used if there is also a need to scroll words up when backspace is pressed.
+But there is a bug that it scrolls up when the current word is in the first line.
+
+function updateLines(currentWord, key) {
+  const currentWordRect = currentWord?.getBoundingClientRect();
+  const words = document.getElementById('words');
+  const margin = parseInt(words.style.marginTop || '0px');
+  if (currentWord?.getBoundingClientRect().top > 420) {
+    words.style.marginTop = (margin - 52) + 'px';
+  } else if (currentWord?.getBoundingClientRect().top < 350 && key === 'Backspace') {
+    words.style.marginTop = (margin + 52) + 'px';
+  }
+};
+*/
 
 // follow the current letter or word with the caret
 function updateCaret() {

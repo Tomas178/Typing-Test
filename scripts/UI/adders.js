@@ -6,10 +6,10 @@ export function removeClass(element, name) {
 	element.className = element.className.replace(name,'');
 }
 
-export function removeExtraLetter(word, child) {
-  word.removeChild(child)
+export function removeExtraLetter(word, letter) {
+  word.removeChild(letter)
 };
 
-export function isExtraLetter(word, child) {
-  return child.classList.contains('extra');
+export function isExtraLetter(letter) {
+  return letter.classList.contains('extra');
 }
