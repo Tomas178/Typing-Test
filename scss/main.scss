@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap');
+$backgroundColor: #323437;
+$textPrimary: #fff;
+$textSecondary: #666;
+$primaryColor: #fd4;
+$primaryFontSize: 2.3rem;
+$testFontSize: 2rem;
+$liveResultsTextColor: black;
+$liveResultsFontSize: calc(1.71098rem + 0.87648*(100vw - 36rem)/39);
+$wordsColor: #d1d0c5;
+$correctLetterColor: #028a0f;
+$incorrectLetterColor: #9c1611;
+$incorrectExtraLetterColor: #68100d;
+$errorColor: #9c1611;
+
+@keyframes caretFlashSmooth {
+  0%, to {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+#main {
+  height: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.pageTest {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  position: relative;
+
+  #typingTest {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #wordsWrapper{
+    position: relative;
+    overflow: visible clip;
+  }
+
+  #displayResults {
+    position: relative;
+  }
+}
+
+.textAboutTest {
+  margin-bottom: 1em;
+  h2 {
+    text-align: center;
+    letter-spacing: -.03em;
+    font-weight: 700;
+    line-height: 1.05;
+  }
+}
+
+.liveResults {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+
+#timerBox {
+  text-align: center;
+}
+
+#timer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+  background-color: $textPrimary;
+  width: 6.875rem;
+  height: 6.875rem;
+
+  svg {
+    position: absolute;
+    width: auto;
+    border: 0 solid;
+  }
+}
+
+.timeInNumbers {
+  font-size: $liveResultsFontSize;
+  margin-bottom: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.03em;
+  display: block;
+  border: 0 solid;
+  color: black;
+}
+
+.timeInText {
+  margin-top: -.5rem;
+  font-weight: 400;
+  font-size: .875rem;
+  border: 0 solid;
+  display: block;
+  text-align: center;
+  color: black;
+}
+
+#typingResults {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.typingResultsBoxes {
+  text-align: center;
+  margin: 0 .75rem;
+  display: block;
+  border: 0 solid $liveResultsTextColor;
+}
+
+.whiteBox {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: .5rem;
+  background-color: white;
+  font-size: $liveResultsFontSize;
+  color: $liveResultsTextColor;
+  text-align: center;
+}
+
+.typingResultsText {
+  font-weight: 400;
+  font-size: .875rem;
+  border: 0 solid;
+  display: block;
+  text-align: center;
+}
+
+#typingTest {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  position: absolute;
+}
+
+#wordsWrapper {
+  font-size: $testFontSize;
+  justify-self: center;
+  width: 70vw;
+  margin-top: 1em;
+}
+
+#wordsInput {
+  width: 1ch;
+  font-size: 1em;
+  height: 1em;
+  opacity: 0;
+  padding: 0;
+  margin: 0 auto;
+  border: none;
+  outline: none;
+  display: block;
+  resize: none;
+  position: absolute;
+  z-index: -1;
+  cursor: default;
+  pointer-events: none;
+  border-radius: 0;
+}
+
+
+input {
+  color: $wordsColor;
+  font-family: "Roboto Mono", "Roboto Mono", "Vazirmatn", monospace;
+  caret-color: $primaryColor;
+  line-height: 1.25em;
+  background: #2c2e31;
+}
+
+#caret {
+  width: .1em;
+  height: 1.2em;
+  background: $primaryColor;
+  animation: caretFlashSmooth 1s infinite;
+  position: absolute;
+  border-radius: .5rem;
+  transform-origin: top left;
+}
+
+#words {
+  height: fit-content;
+  padding-bottom: .5em;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-content: flex-start;
+
+  &.blurred {
+    opacity: .25;
+    filter: blur(4px);
+  }
+
+  .word {
+    letter {
+      border-bottom-style: solid;
+      border-bottom-width: .05em;
+      border-bottom-color: transparent;
+
+      &.correct {
+        color: $correctLetterColor;
+        animation: none;
+      }
+
+      &.incorrect {
+        color: $incorrectLetterColor;
+        animation: none;
+
+        &.extra {
+          color: $incorrectExtraLetterColor;
+          animation: none;
+        }
+      }
+    }
+  }
+}
+
+.word {
+  position: relative;
+  font-size: 1em;
+  line-height: 1em;
+  margin: .25em .3em;
+  font-variant: no-common-ligatures;
+  border-bottom: 2px solid transparent;
+
+  letter {
+    display: inline-block;
+  }
+
+  &.error{
+    border-bottom: 2px solid $errorColor;
+  }
+}
+
+#displayResultsBox {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  align-items: center;
+  font-size: $primaryFontSize;
+  width: 100%;
+  margin-top: 1em;
+}
+
+.displayResultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: $primaryFontSize;
+  margin-top: 1em;
+
+  th, td {
+    padding: 0.75rem;
+    border-bottom: 2px solid black;
+  }
+
+  thead {
+    th {
+      color: $primaryColor;
+      font-weight: 700;
+    }
+  }
+
+  tbody {
+    td {
+      &.better {
+        color: $correctLetterColor;
+      }
+
+      &.worse {
+        color: $incorrectLetterColor;
+      }
+
+      &.same {
+        color: $primaryColor;
+      }
+    }
+  }
+}
+
+.tableTitle {
+  color: $primaryColor;
+  font-size: $primaryFontSize;
+  font-weight: 700;
+  padding-bottom: 2rem;
+}
+
+.better {
+  color: $correctLetterColor;
+}
+
+.worse {
+  color: $incorrectLetterColor;
+}
+
+#resetTestButton {
+  font-size: 1rem;
+  margin: 1rem auto 0;
+  display: flex;
+  padding: 1em 2em;
+  background: none;
+  border: none;
+}
+
+button[aria-label]{
+  overflow: visible;
+}
+
+[aria-label]{
+  position: relative;
+  cursor: pointer;
+}
+
+button {
+  .fas{
+    line-height: 1.25;
+    pointer-events: none;
+  }
+}
+
+.fas {
+  font-weight: 900;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+}
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em;
+}

@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap');
+$backgroundColor: #323437;
+$textPrimary: #fff;
+$textSecondary: #666;
+$primaryColor: #fd4;
+$primaryFontSize: 2.3rem;
+$testFontSize: 2rem;
+$headerColor: #646669;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: $backgroundColor;
+  color: $textPrimary;
+  font-size: $primaryFontSize;
+}
+
+#app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  overflow: hidden;
+  row-gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+header {
+  #headerText {
+    color: $primaryColor;
+
+    h1 {
+      text-align: center;;
+    }
+  }
+}
+
+

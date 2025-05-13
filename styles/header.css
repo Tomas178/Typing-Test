@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #323437;
+  color: #fff;
+  font-size: 2.3rem;
+}
+
+#app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "header" "main" "footer";
+  overflow: hidden;
+  row-gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+header #headerText {
+  color: #fd4;
+}
+header #headerText h1 {
+  text-align: center;
+}
+
+/*# sourceMappingURL=header.css.map */
