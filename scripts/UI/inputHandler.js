@@ -1,4 +1,4 @@
-import { addClass, removeClass, removeExtraLetter, isExtraLetter } from './adders.js';
+import { addClass, removeClass, removeExtraLetter, isExtraLetter } from './classModifiers.js';
 import { test } from '../app/settings.js';
 
 export function handleTyping(e) {
@@ -13,7 +13,7 @@ export function handleTyping(e) {
   const isSpace = key === ' ';
   const isBackspace = key === 'Backspace';
   const isFirstLetter = currentLetter === currentWord?.firstChild;
-  const isBackSpaceAllowed = (currentWord === document.querySelector('.word') && currentLetter === document.querySelector('letter'));
+  const isBackspaceAllowed = (currentWord === document.querySelector('.word') && currentLetter === document.querySelector('letter'));
 
   // Check if the test is over. If it is over, do nothing (the user can't type anymore)
   if (document.querySelector('#wordsWrapper.over')) return;
@@ -37,7 +37,7 @@ export function handleTyping(e) {
     }
   }
 
-  if (isBackSpaceAllowed) {
+  if (isBackspaceAllowed) {
     if (!isLetter) {
       console.log('Backspace is not allowed!');
       return;
@@ -83,28 +83,28 @@ function handleLetterKey(currentWord, currentLetter, expected, key) {
 
 function handleSpaceKey(currentWord, currentLetter, expected) {
   if (expected !== ' ') {
-      const lettersToInvalidate = [...document.querySelectorAll('.word.current letter:not(.correct)')];
-      lettersToInvalidate.forEach(letter => {
-        addClass(letter, 'incorrect');
-      });
-    }
-    addClass(currentWord, 'typed');
-    removeClass(currentWord, 'current');
-    addClass(currentWord.nextSibling, 'current');
-    if (currentLetter) {
-      removeClass(currentLetter, 'current');
-    };
-
-    //  check if the word was typed correctly by checking every letter
-    const wordTypedCorrectly = Array.from(currentWord.children).every(letter => {
-      return letter.classList.contains('correct');
+    const lettersToInvalidate = [...document.querySelectorAll('.word.current letter:not(.correct)')];
+    lettersToInvalidate.forEach(letter => {
+      addClass(letter, 'incorrect');
     });
+  }
+  addClass(currentWord, 'typed');
+  removeClass(currentWord, 'current');
+  addClass(currentWord.nextSibling, 'current');
+  if (currentLetter) {
+    removeClass(currentLetter, 'current');
+  };
 
-    // if the word was not typed correctly, add the error class to the word
-    if (!wordTypedCorrectly) {
-      addClass(currentWord, 'error');
-    }
-    addClass(currentWord.nextSibling.firstChild, 'current');
+  //  check if the word was typed correctly by checking every letter
+  const wordTypedCorrectly = Array.from(currentWord.children).every(letter => {
+    return letter.classList.contains('correct');
+  });
+
+  // if the word was not typed correctly, add the error class to the word
+  if (!wordTypedCorrectly) {
+    addClass(currentWord, 'error');
+  }
+  addClass(currentWord.nextSibling.firstChild, 'current');
 }
 
 function handleBackspaceKey(currentWord, currentLetter, isFirstLetter) {
@@ -177,11 +177,11 @@ function updateCaret() {
   const containerRect = wordsContainer.getBoundingClientRect();
   if (nextLetter && caret && wordsContainer) {
     const nextLetterRect = nextLetter.getBoundingClientRect();
-    caret.style.top = (nextLetterRect.top - containerRect.top) + 2 + 'px';
+    caret.style.top = (nextLetterRect.top - containerRect.top) + 'px';
     caret.style.left = (nextLetterRect.left - containerRect.left) + 'px';
   } else {
     const nextWordRect = nextWord?.getBoundingClientRect();
-    caret.style.top = (nextWordRect?.top - containerRect.top) + 2 + 'px';
+    caret.style.top = (nextWordRect?.top - containerRect.top) + 'px';
     caret.style.left = (nextWordRect?.right - containerRect.left) + 'px';
   };
 };

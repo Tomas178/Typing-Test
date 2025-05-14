@@ -14,8 +14,7 @@
 
 - <strong>class Poem</strong>
 
-    **Instance variable/methods**
-
+    **Instance variable/methods:**
     - Instance variable – words
     - Instance method – cleanUpText()
 
@@ -108,7 +107,7 @@
 </details>
 
 <details>
-<summary><strong>adders.js</strong></summary>
+<summary><strong>classModifiers.js</strong></summary>
 
 - <strong>Functions:</strong>
 
@@ -240,5 +239,165 @@
 	- Remove class `over` from `wordsWrapper`.
 	- `wordsInput.focus()` is called to automatically focus on the typing test.
 	</details>
+
+</details>
+
+<details>
+<summary><strong>test.js</strong></summary>
+
+- <strong>class Test</strong>
+
+  **Instance variable/methods:**
+  - startTimer()
+  - stopTimer()
+  - getWpm()
+  - getWordAccuracy()
+  - endTest()
+  - reset()
+  - restart()
+</details>
+
+<details>
+<summary><strong>settings.js</strong></summary>
+
+  **Variables:**
+  - `test = new Test()`
+</details>
+
+<details>
+<summary><strong>inputHandler.js</strong></summary>
+
+- **Functions:**
+
+  <details>
+  <summary><strong>handleTyping(e)</strong></summary>
+
+  ***Variables:***
+  - `key`
+  - `currentWord`
+  - `currentLetter`
+  - `expected`
+  - `ìsLetter`
+  - `isSpace`
+  - `isBackspace`
+  - `isFirstLetter`
+  - `isBackspaceAllowed`
+
+  ***Function logic:***
+  - if `document.querySelector('#wordsWrapper.over')` then the function returns.
+  - if `key === 'Enter'` then the test restarts.
+  - if `key === 'Escape'` then the test resets.
+  - if `!test.timer` and `isLetter` then the test timer is started. Otherwise, function stops.
+  - if `isBackspaceAllowed`is `true` and `!isLetter` then function stops.
+  - if `isLetter` then `handleLetterKey(currentWord, currentLetter, expected, key)` is called.
+  - if `isSpace` then `handleSpaceKey(currentWord, currentLetter, expected)` is called.
+  - if `isBackspace` then `handleBackspaceKey(currentWord, currentLetter, isFirstLetter)` is called.
+  - at the end `updateLines(currentWord)` and `updateCaret()` are called.
+  </details>
+
+  <details>
+  <summary><strong>handleLetterKey(currentWord, currentLetter, expected, key)</strong></summary>
+
+  ***Function logic:***
+  - if `currentLetter` then:
+    - `currentLetter` is added with `'correct'` or `'incorrect'` class.
+    - class `'current'` is removed from the `currentLetter`.
+    - if `currentLetter.nextSibling` then:
+      - `currentLetter.nextSibling` is added a class `'current'`.
+    - else:
+      - new `<letter>` is created with classes `incorrect extra` and is added to the `currentWord`.
+  </details>
+
+  <details>
+  <summary><strong>handleSpaceKey(currentWord, currentLetter, expected)</strong></summary>
+
+  ***Function logic:***
+  - if `expected` is not a Space key then:
+    - all left letters in `currentWord` are added with a class `incorrect`.
+  - `currentWord` is added a class `typed` and removed class called `current`.
+  - next `<word>` is added with a class `current`.
+  - if `currentLetter` then:
+    - `currentLetter` is removed a class named `current`.
+  - then a boolean variable `wordTypedCorrectly` is declared that has value `true` when every `letter` in `currentWord` has a class `'correct'`.
+  - if `wordTypedCorrectly` is `false` then `currentWord` is given a class `error`.
+  - and the next `<word>` first `letter` is given a class `current`.
+  </details>
+
+  <details>
+  <summary><strong>handleBackspaceKey(currentWord, currentLetter, isFirstLetter)</strong></summary>
+
+  ***Function logic:***
+  - Try Catch block is used to catch and error when user entered `Backspace` key.
+  - if `currentLetter && isFirstLetter` then:
+    - `const previousWord = currentWord.previousSibling` is declared.
+    - Class `current` is removed from `currentWord` and `currentLetter`.
+    - Class `current` is added to the `previousWord` and `previousWord.lastChild`.
+    - Classes `incorrect` and `correct` are removed from `previousWord.lastChild`.
+    - Classes `error` and `typed` are removed from `previousWord`.
+    - if `isExtraLetter(previousWord.lastChild)` then:
+      - `removeExtraLetter(previousWord, previousWord.lastChild)` is called to remove `letter class="extra"`
+  - if `currentLetter && !isFirstLetter` then:
+    - Class `current` is removed from `currentLetter`.
+    - Class `current` is added to `currentLeter`.
+    - Classes `incorrect` and `correct` are removed from `currentLetter.previousSibling`.
+    - if `isExtraLetter(currentLetter.previousSibling)` then:
+      - `removeExtraLetter(currentWord, currentLetter.previousSibling)` is called to remove previous `<letter>`.
+  - if `!currentLetter` then:
+    - Class `current` is added to `currentWord.lastChild`.
+    - Classes `incorrect` and `correct` are removed from `currentWord.lastChild`.
+    - if `isExtraLetter(currentWord.lastChild)` then:
+      - `removeExtraLetter(currentWord, currentWord.lastChild)` is called to remove extra `<letter>`.
+  </details>
+
+  <details>
+  <summary><strong>updateLines(currentWord)</strong></summary>
+
+  ***Function logic:***
+  - if `currentWord?.getBoundingClientRect().top > 420` then:
+    - `const words = document.getElementById('words')` is declared.
+    - `const margin = parseInt(words.style.marginTop || '0px')` is declared.
+    - `words.style.marginTop = (margin - 52) + 'px'` is used to scroll up hidden lines by one line.
+  </details>
+
+  <details>
+  <summary><strong>updateCaret()</strong></summary>
+
+  ***Variables:***
+  - `nextLetter`.
+  - `wordsContainer`
+  - `nextWord`
+  - `caret`
+  - `containerRect`
+
+  ***Function logic:***
+  - if `nextLetter && caret && wordsContainer` then:
+    - `const nextLetterRect = nextLetter.getBoundingClientRect()` is declared.
+    - `caret.style.top = (nextLetterRect.top - containerRect.top) + 'px'` to change caret position vertically.
+    - `caret.style.left = (nextLetterRect.left - containerRect.left) + 'px'` to change caret position horizontally
+  - else:
+    - `const nextWordRect = nextWord?.getBoundingClientRect()` is declared.
+    - `caret.style.top = (nextWordRect?.top - containerRect.top) + 'px'` to change caret position vertically.
+    - `caret.style.left = (nextWordRect?.right - containerRect.left) + 'px'` to change caret position horizontally.
+  </details>
+
+</details>
+
+<details>
+<summary><strong>index.js</strong></summary>
+
+***Imports:***
+- `import { displayWords } from './UI/display.js';`
+- `import { handleTyping } from './UI/inputHandler.js'`
+- `import { test } from './app/settings.js'`
+
+***File logic:***
+- document object is added a `'DOMContentLoaded'` event listener:
+  - `displayWords()` is caleed.
+  - `const wordsInputField = document.querySelector('#wordsInput')` is declared.
+  - `wordsInputField.addEventListener('keyup', handleTyping);` is added so that inputField listen for every typed key when `wordsInputField` is focused.
+  - `const wordsWrapper = document.querySelector('#wordsWrapper')` is declared.
+  - `wordsWrapper` is added an event listener `'click'` which focuses `wordsInputField`.
+  - `const resetButton = document.getElementById('resetTestButton')` is declared.
+  - `resetButton` is added an event listener `'click'` which calls `test.reset()` on click.
 
 </details>

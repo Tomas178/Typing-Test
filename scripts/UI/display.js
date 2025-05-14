@@ -1,5 +1,5 @@
 import { getPoetryDBResponse } from '../app/poetry.js';
-import { addClass, removeClass } from './adders.js';
+import { addClass, removeClass } from './classModifiers.js';
 import localStorageHelper from '../app/localStorage.js';
 
 const wpmBox = document.getElementById('wpm');

@@ -1,4 +1,4 @@
-import { displayWords, resetTest } from './UI/display.js';
+import { displayWords } from './UI/display.js';
 import { handleTyping } from './UI/inputHandler.js';
 import { test } from './app/settings.js';
 
