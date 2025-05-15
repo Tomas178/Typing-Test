@@ -1,5 +1,5 @@
 import { getPoetryDBResponse } from '../app/poetry.js';
-import { addClass, removeClass } from './classModifiers.js';
+import * as ClassModifier from './classModifier.js';
 import localStorageHelper from '../app/localStorage.js';
 
 const wpmBox = document.getElementById('wpm');
@@ -39,8 +39,7 @@ export async function displayWords() {
     wordsContainer.appendChild(wordDiv);
   });
 
-  addClass(document.querySelector('.word'), 'current');
-  addClass(document.querySelector('letter'), 'current');
+  ClassModifier.updateFirstWordFirstLetter();
 }
 
 export function displayResults(wpm, accuracy) {
@@ -59,13 +58,14 @@ function displayResultsTable() {
   const currentTestResults = localStorageHelper.getCurrentTestResults();
   const bestTestResults = localStorageHelper.getBestTestResults();
 
-  // previousTestResults will never be null therefore, we only need to check for currentTestResults
+  ClassModifier.removeAllClassesFromComparisonCell(wpmComparisonCell);
+
+  // currentTestResults will never be null therefore, we only need to check for previousTestResults
   if (previousTestResults === null) {
     wpmCurrentCell.textContent = currentTestResults.wpm;
     wpmPreviousCell.textContent = '-';
     wpmComparisonCell.textContent = '-';
     wpmAllTimeBestCell.textContent = bestTestResults.wpm;
-
 
     accuracyCurrentCell.textContent = currentTestResults.accuracy;
     accuracyPreviousCell.textContent = '-';
@@ -77,15 +77,9 @@ function displayResultsTable() {
     wpmComparisonCell.textContent = localStorageHelper.compareWpm();
     if (wpmComparisonCell.textContent !== '-') {
       if (wpmComparisonCell.textContent === 'same') {
-        removeClass(wpmComparisonCell, 'better');
-        removeClass(wpmComparisonCell, 'worse');
-        removeClass(wpmComparisonCell, 'same');
-        addClass(wpmComparisonCell, 'same');
+        ClassModifier.addClass(wpmComparisonCell, 'same');
       } else {
-        removeClass(wpmComparisonCell, 'better');
-        removeClass(wpmComparisonCell, 'worse');
-        removeClass(wpmComparisonCell, 'same');
-        addClass(wpmComparisonCell, localStorageHelper.compareWpm() === 'better' ? 'better' : 'worse');
+        ClassModifier.addClass(wpmComparisonCell, localStorageHelper.compareWpm() === 'better' ? 'better' : 'worse');
       }
     }
     wpmAllTimeBestCell.textContent = bestTestResults.wpm;
@@ -95,15 +89,11 @@ function displayResultsTable() {
     accuracyComparisonCell.textContent = localStorageHelper.compareAccuracy();
     if (accuracyComparisonCell.textContent !== '-') {
       if (accuracyComparisonCell.textContent === 'same') {
-        removeClass(accuracyComparisonCell, 'better');
-        removeClass(accuracyComparisonCell, 'worse');
-        removeClass(accuracyComparisonCell, 'same');
-        addClass(accuracyComparisonCell, 'same');
+        ClassModifier.removeAllClassesFromComparisonCell(accuracyComparisonCell);
+        ClassModifier.addClass(accuracyComparisonCell, 'same');
       } else {
-        removeClass(accuracyComparisonCell, 'better');
-        removeClass(accuracyComparisonCell, 'worse');
-        removeClass(accuracyComparisonCell, 'same');
-        addClass(accuracyComparisonCell, localStorageHelper.compareAccuracy() === 'better' ? 'better' : 'worse');
+        ClassModifier.removeAllClassesFromComparisonCell(accuracyComparisonCell);
+        ClassModifier.addClass(accuracyComparisonCell, localStorageHelper.compareAccuracy() === 'better' ? 'better' : 'worse');
       }
     }
     accuracyAllTimeBestCell.textContent = bestTestResults.accuracy;
@@ -122,16 +112,14 @@ export function resetTest() {
   wordsContainer.style.marginTop = '0px';
   caret.style.cssText = 'font-size: 2rem; animation-name: caretFlashSmooth; opacity: 1; top: 6px; left: 8.5px;';
   displayWords();
-  removeClass(wordsWrapper, 'over');
+  ClassModifier.removeClass(wordsWrapper, 'over');
   wordsInput.focus();
 }
 
 export function restartTest() {
   const words = [...wordsContainer.querySelectorAll('.word')];
   words.forEach(word => {
-    removeClass(word, 'typed');
-    removeClass(word, 'error');
-    removeClass(word, 'current');
+    ClassModifier.removeAllClassesFromWord(word);
     word.innerHTML = '';
     [...word.dataset.originalText].forEach(char => {
       const letterSpan = document.createElement('letter');
@@ -143,11 +131,10 @@ export function restartTest() {
   accuracyBox.textContent = '-';
   timerBox.style.display = 'block';
   displayResultsBox.style.display = 'none';
-  addClass(document.querySelector('.word'), 'current');
-  addClass(document.querySelector('letter'), 'current');
+  ClassModifier.updateFirstWordFirstLetter();
   timeInNumbers.textContent = 60;
   wordsContainer.style.marginTop = '0px';
   caret.style.cssText = 'font-size: 2rem; animation-name: caretFlashSmooth; opacity: 1; top: 6px; left: 8.5px;';
-  removeClass(wordsWrapper, 'over');
+  ClassModifier.removeClass(wordsWrapper, 'over');
   wordsInput.focus();
 }

@@ -107,7 +107,7 @@
 </details>
 
 <details>
-<summary><strong>classModifiers.js</strong></summary>
+<summary><strong>classModifier.js</strong></summary>
 
 - <strong>Functions:</strong>
 
@@ -152,6 +152,33 @@
 
 	**Function logic:**
 	- Removes `letter` from `word`.
+	</details>
+
+	<details>
+	<summary><strong>removeAllClassesFromComparisonCell(comparisonCell)</strong></summary>
+
+	**Parameters:**
+	- `comparisonCell` – the comparisonCell that should be removed with all the possible classes.
+
+	**Function logic:**
+	- Removes all the possible classes from the `comparisonCell`
+	</details>
+
+	<details>
+	<summary><strong>removeAllClassesFromWord(word)</strong></summary>
+
+	**Parameters:**
+	- `word` – word that should be removed with all the possible classes.
+
+	**Function logic:**
+	- Removes all the possible classes from the `word`.
+	</details>
+
+	<details>
+	<summary><strong>updateFirstWordFirstLetter()</strong></summary>
+
+	**Function logic:**
+	- Adds class `current` to the first `<word>` and first `<letter>` tag.
 	</details>
 
 </details>

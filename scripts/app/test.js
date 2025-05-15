@@ -1,5 +1,5 @@
 import LocalStorageHelper from './localStorage.js';
-import { addClass } from '../UI/classModifiers.js';
+import { addClass } from '../UI/classModifier.js';
 import { displayResults, resetTest, restartTest } from '../UI/display.js';
 
 export default class Test {

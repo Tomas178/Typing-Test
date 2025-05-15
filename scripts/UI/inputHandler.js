@@ -1,4 +1,4 @@
-import { addClass, removeClass, removeExtraLetter, isExtraLetter } from './classModifiers.js';
+import { addClass, removeClass, removeExtraLetter, isExtraLetter } from './classModifier.js';
 import { test } from '../app/settings.js';
 
 export function handleTyping(e) {
