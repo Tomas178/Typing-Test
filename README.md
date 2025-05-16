@@ -214,6 +214,20 @@
 
 	**Functions:**
 	<details>
+	<summary><strong>showLoading</strong></summary>
+
+	**Function logic:**
+	- Creates a `<div class="loading">` inside of `#words` and hides `#caret`.
+	</details>
+
+	<details>
+	<summary><strong>hideLoading</strong></summary>
+
+	**Function logic:**
+	- Removes a `<div class="loading">` inside of `#words` and displays `#caret`.
+	</details>
+
+	<details>
 	<summary><strong>displayWords</strong></summary>
 
 	**Variables:**

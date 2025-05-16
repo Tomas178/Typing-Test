@@ -1,10 +1,12 @@
 import { addClass, removeClass, removeExtraLetter, isExtraLetter } from './classModifier.js';
 import { test } from '../app/settings.js';
 
+const words = document.getElementById('words');
+
 export function handleTyping(e) {
   const key = e.key;
-  const currentWord = document.querySelector('.word.current');
-  const currentLetter = document.querySelector('letter.current');
+  const currentWord = words.querySelector('.word.current');
+  const currentLetter = words.querySelector('letter.current');
   const expected = currentLetter?.textContent || ' ';
 
   // Use this when displayed text only and only consists of numbers or letters: const isLetter = /^[a-z0-9]$/.test(key);
@@ -13,22 +15,19 @@ export function handleTyping(e) {
   const isSpace = key === ' ';
   const isBackspace = key === 'Backspace';
   const isFirstLetter = currentLetter === currentWord?.firstChild;
-  const isBackspaceAllowed = (currentWord === document.querySelector('.word') && currentLetter === document.querySelector('letter'));
+  const isBackspaceAllowed = (currentWord === words.querySelector('.word') && currentLetter === words.querySelector('letter'));
 
   // Check if the test is over. If it is over, do nothing (the user can't type anymore)
   if (document.querySelector('#wordsWrapper.over')) return;
 
-  // handle enter key
   if (key === 'Enter') {
     test.restart();
   };
 
-  // Handle escape key
   if (key === 'Escape') {
     test.reset();
   };
 
-  // Start the timer if it hasn't been started yey
   if (!test.timer) {
     if (isLetter) {
       test.startTimer();
@@ -44,25 +43,20 @@ export function handleTyping(e) {
     }
   }
 
-  // Handle letter keys
   if (isLetter) {
     handleLetterKey(currentWord, currentLetter, expected, key);
   };
 
-  // Handle space
   if (isSpace) {
     handleSpaceKey(currentWord, currentLetter, expected);
   };
 
-  // Handle backspace
   if (isBackspace) {
     handleBackspaceKey(currentWord, currentLetter, isFirstLetter);
   };
 
-  // scroll lines / words
   updateLines(currentWord);
 
-  // Move the caret
   updateCaret();
 };
 
@@ -83,7 +77,7 @@ function handleLetterKey(currentWord, currentLetter, expected, key) {
 
 function handleSpaceKey(currentWord, currentLetter, expected) {
   if (expected !== ' ') {
-    const lettersToInvalidate = [...document.querySelectorAll('.word.current letter:not(.correct)')];
+    const lettersToInvalidate = [...words.querySelectorAll('.word.current letter:not(.correct)')];
     lettersToInvalidate.forEach(letter => {
       addClass(letter, 'incorrect');
     });
@@ -95,12 +89,10 @@ function handleSpaceKey(currentWord, currentLetter, expected) {
     removeClass(currentLetter, 'current');
   };
 
-  //  check if the word was typed correctly by checking every letter
   const wordTypedCorrectly = Array.from(currentWord.children).every(letter => {
     return letter.classList.contains('correct');
   });
 
-  // if the word was not typed correctly, add the error class to the word
   if (!wordTypedCorrectly) {
     addClass(currentWord, 'error');
   }
@@ -144,7 +136,7 @@ function handleBackspaceKey(currentWord, currentLetter, isFirstLetter) {
     };
 }
 
-// scrool the words up if the current word is in the bottom line
+// scroll the words up if the current word is in the bottom line
 function updateLines(currentWord) {
   if (currentWord?.getBoundingClientRect().top > 420) {
     const words = document.getElementById('words');
@@ -168,11 +160,10 @@ function updateLines(currentWord, key) {
 };
 */
 
-// follow the current letter or word with the caret
 function updateCaret() {
-  const nextLetter = document.querySelector('letter.current');
+  const nextLetter = words.querySelector('letter.current');
   const wordsContainer = document.getElementById('wordsWrapper');
-  const nextWord = document.querySelector('.word.current');
+  const nextWord = words.querySelector('.word.current');
   const caret = document.getElementById('caret');
   const containerRect = wordsContainer.getBoundingClientRect();
   if (nextLetter && caret && wordsContainer) {

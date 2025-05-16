@@ -24,8 +24,31 @@ const accuracyPreviousCell = document.getElementById('accuracyPreviousCell');
 const accuracyComparisonCell = document.getElementById('accuracyComparisonCell');
 const accuracyAllTimeBestCell = document.getElementById('accuracyAllTimeBestCell');
 
+function showLoading() {
+  if (!wordsContainer.querySelector('.loading')) {
+    const loadingElement = document.createElement('div');
+    ClassModifier.addClass(loadingElement, 'loading');
+    loadingElement.textContent = 'Loading Poem...';
+    wordsContainer.appendChild(loadingElement);
+    caret.style.display = 'none';
+  }
+}
+
+function hideLoading() {
+  const loadingElement = wordsContainer.querySelector('.loading');
+  if (loadingElement) {
+    loadingElement.remove();
+  }
+
+  caret.style.display = 'block';
+}
+
 export async function displayWords() {
+  showLoading();
+
   const Poem = await getPoetryDBResponse();
+
+  hideLoading();
 
   Poem.words.forEach(word => {
     const wordDiv = document.createElement("div");
@@ -93,6 +116,7 @@ export function resetTest() {
   typingResults.style.display = 'none';
   displayResultsBox.style.display = 'none';
   wordsWrapper.style.display = 'block';
+  instructions.style.display = 'block';
   timeInNumbers.textContent = 60;
   wordsContainer.style.marginTop = '0px';
   caret.style.cssText = 'font-size: 2rem; animation-name: caretFlashSmooth; opacity: 1; top: 6px; left: 8.5px;';

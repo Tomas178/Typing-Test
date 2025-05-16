@@ -142,6 +142,18 @@
   margin-top: 1em;
 }
 
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  text-align: center;
+  color: #fd4;
+  padding: 2rem;
+  z-index: 10;
+}
+
 #wordsInput {
   width: 1ch;
   font-size: 1em;
@@ -238,7 +250,6 @@ input {
   border-collapse: collapse;
   text-align: center;
   font-size: 2.3rem;
-  margin-top: 1em;
 }
 .displayResultsTable th, .displayResultsTable td {
   padding: 0.75rem;
@@ -262,7 +273,7 @@ input {
   color: #fd4;
   font-size: 2.3rem;
   font-weight: 700;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .better {
@@ -274,12 +285,20 @@ input {
 }
 
 #resetTestButton {
-  font-size: 1rem;
-  margin: 1rem auto 0;
+  font-size: 2rem;
+  margin: 2rem auto 0;
   display: flex;
-  padding: 1em 2em;
   background: none;
   border: none;
+  cursor: pointer;
+}
+#resetTestButton i {
+  font-size: 2rem;
+}
+
+#resetTestButton:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
 }
 
 button[aria-label] {

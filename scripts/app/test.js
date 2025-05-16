@@ -2,9 +2,11 @@ import LocalStorageHelper from './localStorage.js';
 import { addClass } from '../UI/classModifier.js';
 import { displayResults, resetTest, restartTest } from '../UI/display.js';
 
+const words = document.getElementById('words');
+
 export default class Test {
 	constructor() {
-			this.gameTime = 3 * 1000;
+			this.gameTime = 10 * 1000;
 			this.timer = null;
 			this.gameStart = null;
 			this.pauseTime = 0;
@@ -33,21 +35,21 @@ export default class Test {
 	}
 
 	getWpm() {
-		const wordsTypedCorrectly = [...document.querySelectorAll('.word.typed:not(.error)')];
+		const wordsTypedCorrectly = [...words.querySelectorAll('.word.typed:not(.error)')];
   	return Math.round(wordsTypedCorrectly.length / this.gameTime * 60000);
 	}
 
 	getWordAccuracy() {
-		const wordsTyped = [...document.querySelectorAll('.word.typed')];
-		const wordsTypedCorrectly = [...document.querySelectorAll('.word.typed:not(.error)')];
+		const wordsTyped = [...words.querySelectorAll('.word.typed')];
+		const wordsTypedCorrectly = [...words.querySelectorAll('.word.typed:not(.error)')];
 		const accuracy = Math.round((wordsTypedCorrectly.length / wordsTyped.length) * 100);
 		return isNaN(accuracy) ? 0 : accuracy;
 	}
 
 	endTest() {
 		this.stopTimer();
-		addClass(document.querySelector('#wordsWrapper', 'over'));
-		addClass(document.querySelector('#instructions', 'over'));
+		addClass(document.querySelector('#wordsWrapper'), 'over');
+		addClass(document.querySelector('#instructions'), 'over');
 		const wpm = this.getWpm();
 		const accuracy = this.getWordAccuracy();
 		LocalStorageHelper.saveToLocalStorage(wpm, accuracy);

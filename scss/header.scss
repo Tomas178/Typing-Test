@@ -7,15 +7,10 @@ $primaryFontSize: 2.3rem;
 $testFontSize: 2rem;
 $headerColor: #646669;
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   font-family: 'Roboto', sans-serif;
   background-color: $backgroundColor;
   color: $textPrimary;
-  font-size: $primaryFontSize;
 }
 
 #app {

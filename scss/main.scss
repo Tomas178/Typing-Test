@@ -162,6 +162,18 @@ $errorColor: #9c1611;
   margin-top: 1em;
 }
 
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  text-align: center;
+  color: $primaryColor;
+  padding: 2rem;
+  z-index: 10; // ensure it's above the words
+}
+
 #wordsInput {
   width: 1ch;
   font-size: 1em;
@@ -268,7 +280,6 @@ input {
   border-collapse: collapse;
   text-align: center;
   font-size: $primaryFontSize;
-  margin-top: 1em;
 
   th, td {
     padding: 0.75rem;
@@ -303,7 +314,7 @@ input {
   color: $primaryColor;
   font-size: $primaryFontSize;
   font-weight: 700;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .better {
@@ -315,12 +326,21 @@ input {
 }
 
 #resetTestButton {
-  font-size: 1rem;
-  margin: 1rem auto 0;
+  font-size: 2rem; // increased from 1rem to 2rem
+  margin: 2rem auto 0;
   display: flex;
-  padding: 1em 2em;
   background: none;
   border: none;
+  cursor: pointer;
+
+  i {
+    font-size: 2rem; // increase icon size as well
+  }
+}
+
+#resetTestButton:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
 }
 
 button[aria-label]{
