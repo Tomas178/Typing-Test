@@ -131,7 +131,7 @@
 
 #typingTest {
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   position: absolute;
 }
 
@@ -307,6 +307,18 @@ button .fas {
 .fa-fw {
   text-align: center;
   width: 1.25em;
+}
+
+#instructions {
+  font-size: 2.3rem;
+  margin-top: 1em;
+  text-align: center;
+}
+#instructions .instructionsText {
+  font-size: 2.3rem;
+  margin-top: 1rem;
+  text-align: center;
+  color: #fd4;
 }
 
 /*# sourceMappingURL=main.css.map */

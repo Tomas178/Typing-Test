@@ -4,7 +4,7 @@ import { displayResults, resetTest, restartTest } from '../UI/display.js';
 
 export default class Test {
 	constructor() {
-			this.gameTime = 60 * 1000;
+			this.gameTime = 3 * 1000;
 			this.timer = null;
 			this.gameStart = null;
 			this.pauseTime = 0;
@@ -47,6 +47,7 @@ export default class Test {
 	endTest() {
 		this.stopTimer();
 		addClass(document.querySelector('#wordsWrapper', 'over'));
+		addClass(document.querySelector('#instructions', 'over'));
 		const wpm = this.getWpm();
 		const accuracy = this.getWordAccuracy();
 		LocalStorageHelper.saveToLocalStorage(wpm, accuracy);

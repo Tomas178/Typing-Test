@@ -12,6 +12,7 @@ const wordsInput = document.getElementById('wordsInput');
 const wordsContainer = document.getElementById("words");
 const wordsWrapper = document.getElementById('wordsWrapper');
 const displayResultsBox = document.getElementById('displayResultsBox');
+const instructions = document.getElementById('instructions');
 
 const wpmCurrentCell = document.getElementById('wpmCurrentCell');
 const wpmPreviousCell = document.getElementById('wpmPreviousCell');
@@ -47,6 +48,7 @@ export function displayResults(wpm, accuracy) {
   accuracyBox.textContent = accuracy;
   timerBox.style.display = 'none';
   wordsWrapper.style.display = 'none';
+  instructions.style.display = 'none';
   typingResults.style.display = 'flex';
   displayResultsBox.style.display = 'grid';
 
@@ -59,28 +61,17 @@ function displayResultsTable() {
   const bestTestResults = localStorageHelper.getBestTestResults();
 
   ClassModifier.removeAllClassesFromComparisonCell(wpmComparisonCell);
+  ClassModifier.removeAllClassesFromComparisonCell(accuracyComparisonCell);
 
   // currentTestResults will never be null therefore, we only need to check for previousTestResults
   if (previousTestResults === null) {
-    wpmCurrentCell.textContent = currentTestResults.wpm;
-    wpmPreviousCell.textContent = '-';
-    wpmComparisonCell.textContent = '-';
-    wpmAllTimeBestCell.textContent = bestTestResults.wpm;
-
-    accuracyCurrentCell.textContent = currentTestResults.accuracy;
-    accuracyPreviousCell.textContent = '-';
-    accuracyComparisonCell.textContent = '-';
-    accuracyAllTimeBestCell.textContent = bestTestResults.accuracy;
+    displayFirstResultsTableState(currentTestResults, bestTestResults);
   } else {
     wpmCurrentCell.textContent = currentTestResults.wpm;
     wpmPreviousCell.textContent = previousTestResults.wpm;
     wpmComparisonCell.textContent = localStorageHelper.compareWpm();
     if (wpmComparisonCell.textContent !== '-') {
-      if (wpmComparisonCell.textContent === 'same') {
-        ClassModifier.addClass(wpmComparisonCell, 'same');
-      } else {
-        ClassModifier.addClass(wpmComparisonCell, localStorageHelper.compareWpm() === 'better' ? 'better' : 'worse');
-      }
+      displayWpmComparisonCell();
     }
     wpmAllTimeBestCell.textContent = bestTestResults.wpm;
 
@@ -88,13 +79,7 @@ function displayResultsTable() {
     accuracyPreviousCell.textContent = previousTestResults.accuracy;
     accuracyComparisonCell.textContent = localStorageHelper.compareAccuracy();
     if (accuracyComparisonCell.textContent !== '-') {
-      if (accuracyComparisonCell.textContent === 'same') {
-        ClassModifier.removeAllClassesFromComparisonCell(accuracyComparisonCell);
-        ClassModifier.addClass(accuracyComparisonCell, 'same');
-      } else {
-        ClassModifier.removeAllClassesFromComparisonCell(accuracyComparisonCell);
-        ClassModifier.addClass(accuracyComparisonCell, localStorageHelper.compareAccuracy() === 'better' ? 'better' : 'worse');
-      }
+      displayAccuracyComparisonCell();
     }
     accuracyAllTimeBestCell.textContent = bestTestResults.accuracy;
   }
@@ -137,4 +122,32 @@ export function restartTest() {
   caret.style.cssText = 'font-size: 2rem; animation-name: caretFlashSmooth; opacity: 1; top: 6px; left: 8.5px;';
   ClassModifier.removeClass(wordsWrapper, 'over');
   wordsInput.focus();
+}
+
+function displayWpmComparisonCell() {
+  if (wpmComparisonCell.textContent === 'same') {
+    ClassModifier.addClass(wpmComparisonCell, 'same');
+  } else {
+    ClassModifier.addClass(wpmComparisonCell, localStorageHelper.compareWpm() === 'better' ? 'better' : 'worse');
+  }
+}
+
+function displayAccuracyComparisonCell() {
+  if (accuracyComparisonCell.textContent === 'same') {
+    ClassModifier.addClass(accuracyComparisonCell, 'same');
+  } else {
+    ClassModifier.addClass(accuracyComparisonCell, localStorageHelper.compareAccuracy() === 'better' ? 'better' : 'worse');
+  }
+}
+
+function displayFirstResultsTableState(currentTestResults, bestTestResults) {
+  wpmCurrentCell.textContent = currentTestResults.wpm;
+  wpmPreviousCell.textContent = '-';
+  wpmComparisonCell.textContent = '-';
+  wpmAllTimeBestCell.textContent = bestTestResults.wpm;
+
+  accuracyCurrentCell.textContent = currentTestResults.accuracy;
+  accuracyPreviousCell.textContent = '-';
+  accuracyComparisonCell.textContent = '-';
+  accuracyAllTimeBestCell.textContent = bestTestResults.accuracy;
 }

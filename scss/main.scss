@@ -151,7 +151,7 @@ $errorColor: #9c1611;
 
 #typingTest {
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   position: absolute;
 }
 
@@ -350,4 +350,17 @@ button {
 .fa-fw {
   text-align: center;
   width: 1.25em;
+}
+
+#instructions {
+  font-size: $primaryFontSize;
+  margin-top: 1em;
+  text-align: center;
+
+  .instructionsText {
+    font-size: $primaryFontSize;
+    margin-top: 1rem;
+    text-align: center;
+    color: $primaryColor;
+  }
 }

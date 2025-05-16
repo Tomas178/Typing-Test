@@ -4,24 +4,28 @@ export default class LocalStorageHelper {
 	static saveToLocalStorage(wpm, accuracy) {
 		const currentTestResults = this.getCurrentTestResults();
 		const bestTestResults = this.getBestTestResults();
-
-		if (currentTestResults === null) {
-			// No current test results, set initial values
-			localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
-			localStorage.setItem('Best', JSON.stringify({ wpm, accuracy }));
-		} else {
-			// Save current test results as previous
-			localStorage.setItem('Previous', JSON.stringify(currentTestResults));
-
-			// Update the best test results if the new ones are better
-			if (bestTestResults.wpm < wpm && bestTestResults.accuracy <= accuracy) {
-				console.log('New best test results');
+		try {
+			if (currentTestResults === null) {
+				// No current test results, set initial values
+				localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
 				localStorage.setItem('Best', JSON.stringify({ wpm, accuracy }));
-			}
+			} else {
+				// Save current test results as previous
+				localStorage.setItem('Previous', JSON.stringify(currentTestResults));
 
-			// Set new current test results
-			localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
+				// Update the best test results if the new ones are better
+				if (bestTestResults.wpm < wpm && bestTestResults.accuracy <= accuracy) {
+					console.log('New best test results');
+					localStorage.setItem('Best', JSON.stringify({ wpm, accuracy }));
+				}
+
+				// Set new current test results
+				localStorage.setItem('Current', JSON.stringify({ wpm, accuracy }));
 			}
+		}
+		catch (error) {
+			console.error('Something wrong happened while saving to localStorage:', error);
+		}
 	}
 
 	// Get the best test results from localStorage
