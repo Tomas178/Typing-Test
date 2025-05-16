@@ -32,16 +32,16 @@
 
 - <strong>class LocalStorageHelper</strong>
 
-  **Functions:**
+  **Methods:**
 
   <details>
   <summary><strong>saveToLocalStorage(wpm, accuracy)</strong></summary>
 
-  **Function variables:**
+  **Method variables:**
   - `currentTestResults`
   - `bestTestResults`
 
-  **Function logic:**
+  **Method logic:**
   - If there’s no `currentTestResults` → set Current and Best test results.
   - Otherwise, update them accordingly. 
   </details>
@@ -49,43 +49,43 @@
 	<details>
 	<summary><strong>getBestTestResults</strong></summary>
 
-	**Function variables:**
+	**Method variables:**
   - `bestTestResults`
 
-	**Function logic:**
+	**Method logic:**
 	- if there is then returns `bestTestResults` otherwise, returns `null`.
 	</details>
 
 	<details>
 	<summary><strong>getPreviousTestResults</strong></summary>
 
-	**Function variables:**
+	**Method variables:**
 	- `previousTestResults`
 
-	**Function logic:**
+	**Method logic:**
 	- if there is then returns `previousTestResults` otherwise, returns `null`.
 	</details>
 
 	<details>
 	<summary><strong>getCurrentTestResults</strong></summary>
 
-	**Function variables:**
+	**Method variables:**
 	- `currentTestResults`
 
-	**Function logic:**
+	**Method logic:**
 	- if there is then returns `currentTestResults` otherwise, returns `null`.
 	</details>
 
 	<details>
 	<summary><strong>compareWpm</strong></summary>
 
-	**Function variables:**
+	**Method variables:**
 	- `previousTestResults`
 	- `currentTestResults`
 	- `previousWpm`
 	- `currentWpm`
 
-	**Function logic:**
+	**Method logic:**
 	- if `currentWpm === previousWpm` returns 'same'
 	- if `currentWpm > previousWpm` returns 'better' else 'worse'
 	</details>
@@ -93,13 +93,13 @@
 	<details>
 	<summary><strong>compareAccuracy</strong></summary>
 
-	**Function variables:**
+	**Method variables:**
 	- `previousTestResults`
 	- `currentTestResults`
 	- `previousAccuracy`
 	- `currentAccuracy`
 
-	**Function logic:**
+	**Method logic:**
 	- if `currentAccuracy === previousAccuracy` returns 'same'
 	- if `currentAccuracy > previousAccuracy` returns 'better' else 'worse'
 	</details>
