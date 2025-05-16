@@ -48,8 +48,8 @@ export default class Test {
 
 	endTest() {
 		this.stopTimer();
-		addClass(document.querySelector('#wordsWrapper'), 'over');
-		addClass(document.querySelector('#instructions'), 'over');
+		addClass(document.getElementById('wordsWrapper'), 'over');
+		addClass(document.getElementById('instructions'), 'over');
 		const wpm = this.getWpm();
 		const accuracy = this.getWordAccuracy();
 		LocalStorageHelper.saveToLocalStorage(wpm, accuracy);

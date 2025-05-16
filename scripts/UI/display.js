@@ -126,7 +126,7 @@ export function resetTest() {
 }
 
 export function restartTest() {
-  const words = [...wordsContainer.querySelectorAll('.word')];
+  const words = [...wordsContainer.querySelectorAll('.word.typed'), wordsContainer.querySelector('.word.current')];
   words.forEach(word => {
     ClassModifier.removeAllClassesFromWord(word);
     word.innerHTML = '';

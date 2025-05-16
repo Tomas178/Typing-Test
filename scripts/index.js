@@ -5,10 +5,10 @@ import { test } from './app/settings.js';
 document.addEventListener('DOMContentLoaded', () => {
   displayWords();
 
-  const wordsInputField = document.querySelector('#wordsInput');
+  const wordsInputField = document.getElementById('wordsInput');
   wordsInputField.addEventListener('keyup', handleTyping);
 
-  const wordsWrapper = document.querySelector('#wordsWrapper');
+  const wordsWrapper = document.getElementById('wordsWrapper');
   wordsWrapper.addEventListener('click', () => {
     wordsInputField.focus();
   });

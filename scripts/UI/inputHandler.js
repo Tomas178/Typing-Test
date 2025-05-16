@@ -18,7 +18,7 @@ export function handleTyping(e) {
   const isBackspaceAllowed = (currentWord === words.querySelector('.word') && currentLetter === words.querySelector('letter'));
 
   // Check if the test is over. If it is over, do nothing (the user can't type anymore)
-  if (document.querySelector('#wordsWrapper.over')) return;
+  if (document.getElementById('wordsWrapper.over')) return;
 
   if (key === 'Enter') {
     test.restart();
@@ -139,7 +139,6 @@ function handleBackspaceKey(currentWord, currentLetter, isFirstLetter) {
 // scroll the words up if the current word is in the bottom line
 function updateLines(currentWord) {
   if (currentWord?.getBoundingClientRect().top > 420) {
-    const words = document.getElementById('words');
     const margin = parseInt(words.style.marginTop || '0px');
     words.style.marginTop = (margin - 52) + 'px';
   };
@@ -150,7 +149,6 @@ But there is a bug that it scrolls up when the current word is in the first line
 
 function updateLines(currentWord, key) {
   const currentWordRect = currentWord?.getBoundingClientRect();
-  const words = document.getElementById('words');
   const margin = parseInt(words.style.marginTop || '0px');
   if (currentWord?.getBoundingClientRect().top > 420) {
     words.style.marginTop = (margin - 52) + 'px';
