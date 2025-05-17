@@ -77,7 +77,7 @@ function handleLetterKey(currentWord, currentLetter, expected, key) {
 
 function handleSpaceKey(currentWord, currentLetter, expected) {
   if (expected !== ' ') {
-    const lettersToInvalidate = [...words.querySelectorAll('.word.current letter:not(.correct)')];
+    const lettersToInvalidate = [...words.querySelectorAll('.word.current letter:not(.correct):not(.incorrect)')];
     lettersToInvalidate.forEach(letter => {
       addClass(letter, 'incorrect');
     });
