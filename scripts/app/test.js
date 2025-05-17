@@ -6,7 +6,7 @@ const words = document.getElementById('words');
 
 export default class Test {
 	constructor() {
-			this.gameTime = 10 * 1000;
+			this.gameTime = 60 * 1000;
 			this.timer = null;
 			this.gameStart = null;
 			this.pauseTime = 0;
