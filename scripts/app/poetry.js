@@ -1,7 +1,5 @@
-const invalidChars = new Set(["—", "_", " ", "." , ",", "!", "?", ":", ";", "'", '"', "(", ")", "[", "]", "{", "}", "<", ">", "@", "#", "$", "%", "^", "&", "*", "+", "-", "=", "|", "\\", "/", "`", "~"]);
 const PoetryDBAPI = "https://poetrydb.org/random";
 const maxWords = 250;
-
 
 export class Poem {
   constructor(words) {
@@ -17,7 +15,7 @@ export class Poem {
     for (const word of this.words) {
       let cleanedWord = '';
       for (const char of word) {
-        if (!invalidChars.has(char)) {
+        if (RegExp(/[a-z]/).test(char)) {
           cleanedWord += char;
         }
       }
