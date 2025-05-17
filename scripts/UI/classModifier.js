@@ -1,9 +1,9 @@
 export function addClass(element, name) {
-	element.className += ` ${name}`;
+	element.classList.add(name);
 }
 
 export function removeClass(element, name) {
-	element.className = element.className.replace(name,'');
+	element.classList.remove(name);
 }
 
 export function removeExtraLetter(word, letter) {

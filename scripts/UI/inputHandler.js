@@ -70,7 +70,8 @@ function handleLetterKey(currentWord, currentLetter, expected, key) {
     } else {
       const incorrectLetter = document.createElement('letter');
       incorrectLetter.textContent = key;
-      addClass(incorrectLetter, 'incorrect extra');
+      addClass(incorrectLetter, 'incorrect');
+      addClass(incorrectLetter, 'extra');
       currentWord.appendChild(incorrectLetter);
     }
 }
