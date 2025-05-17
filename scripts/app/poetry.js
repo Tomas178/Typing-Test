@@ -15,7 +15,7 @@ export class Poem {
     for (const word of this.words) {
       let cleanedWord = '';
       for (const char of word) {
-        if (RegExp(/[a-z]/).test(char)) {
+        if (RegExp(/[a-zA-Z]/).test(char)) {
           cleanedWord += char;
         }
       }
