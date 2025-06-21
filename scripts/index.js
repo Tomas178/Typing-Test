@@ -1,6 +1,8 @@
 import { displayWords } from './UI/display.js';
 import { handleTyping } from './UI/inputHandler.js';
-import { test } from './app/settings.js';
+import Test from './app/test.js';
+
+const test = new Test();
 
 document.addEventListener('DOMContentLoaded', () => {
   displayWords();

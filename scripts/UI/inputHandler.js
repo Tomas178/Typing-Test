@@ -137,7 +137,6 @@ function handleBackspaceKey(currentWord, currentLetter, isFirstLetter) {
     };
 }
 
-// scroll the words up if the current word is in the bottom line
 function updateLines(currentWord) {
   if (currentWord?.getBoundingClientRect().top > 420) {
     const margin = parseInt(words.style.marginTop || '0px');

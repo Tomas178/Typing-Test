@@ -1,4 +1,4 @@
-import { getPoetryDBResponse } from '../app/poetry.js';
+import { getPoetryDBResponse } from '../app/poetryService.js';
 import * as ClassModifier from './classModifier.js';
 import localStorageHelper from '../app/localStorage.js';
 
